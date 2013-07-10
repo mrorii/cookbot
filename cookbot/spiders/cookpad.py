@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import re
+
 from scrapy import log
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
@@ -30,6 +32,20 @@ class CookpadSpider(CrawlSpider):
     def parse_recipe(self, response):
         hxs = HtmlXPathSelector(response)
         recipe = Recipe()
-        recipe['name'] = hxs.select("//div[@id='recipe-title']/h1/text()").extract()
-        recipe['author'] = hxs.select("//a[@id='recipe_author_name']/@href").extract()
+        recipe['id'] = int(re.findall(r'recipe/(\d+)', response.url)[0])
+        recipe['name'] = hxs.select("//div[@id='recipe-title']/h1/text()")[0] \
+                            .extract().strip()
+        recipe['author'] = int(
+            hxs.select("//a[@id='recipe_author_name']/@href").re('(\d+)')[0]
+        )
+        recipe['description'] = hxs.select("//div[@id='description']/text()")[0] \
+                                   .extract().strip()
+        recipe['ingredients'] = hxs.select("//div[@class='ingredient_name']/text()") \
+                                   .extract()
+        recipe['report_count'] = int(
+            hxs.select("//li[@id='tsukurepo_tab']/a/span/text()").re('(\d+)')[0]
+        )
+        recipe['comment_count'] = int(
+            hxs.select("//li[@id='comment_tab']/a/span/text()").re('(\d+)')[0]
+        )
         return recipe

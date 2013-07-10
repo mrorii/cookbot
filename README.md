@@ -2,6 +2,10 @@
 
 A minimal [cookpad](http://cookpad.com/) crawler.
 
+## Usage
+
+    scrapy crawl cookpad --output=recipes.json
+
 ## License
 
 Copyright (c) 2013, [Naoki Orii](http://mrorii.github.io/)
