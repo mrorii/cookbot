@@ -12,4 +12,4 @@ SPIDER_MODULES = ['cookbot.spiders']
 NEWSPIDER_MODULE = 'cookbot.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'cookbot (+http://www.yourdomain.com)'
+USER_AGENT = 'cookbot (+http://mrorii.github.io/)'

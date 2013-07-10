@@ -5,7 +5,6 @@
 
 from scrapy.item import Item, Field
 
-class CookbotItem(Item):
-    # define the fields for your item here like:
-    # name = Field()
-    pass
+class Recipe(Item):
+    name = Field()
+    author = Field()
