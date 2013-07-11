@@ -17,6 +17,7 @@ class AllrecipesSpider(CrawlSpider):
     download_delay = 1
 
     start_urls = [
+        # International Recipes
         'http://allrecipes.com/Recipes/World-Cuisine/African/main.aspx',
         'http://allrecipes.com/Recipes/World-Cuisine/Asian/Chinese/main.aspx',
         'http://allrecipes.com/Recipes/World-Cuisine/Asian/Japanese/Main.aspx',
@@ -32,11 +33,18 @@ class AllrecipesSpider(CrawlSpider):
         'http://allrecipes.com/Recipes/World-Cuisine/Latin-American/Mexican/main.aspx',
         'http://allrecipes.com/Recipes/USA-Regional-and-Ethnic/Cajun-and-Creole/main.aspx',
         'http://allrecipes.com/Recipes/USA-Regional-and-Ethnic/Southern-Recipes/Southern-Cooking-by-State/main.aspx',
+
+         # American Recipes
+        'http://allrecipes.com/Recipes/Main-Dish/Main.aspx',
+        'http://allrecipes.com/Recipes/Meat-and-Poultry/Main.aspx',
+        'http://allrecipes.com/Recipes/Fruits-and-Vegetables/Main.aspx',
+        'http://allrecipes.com/Recipes/Seafood/Main.aspx',
+        'http://allrecipes.com/Recipes/Pasta/Main.aspx',
     ]
 
     rules = (
         # Follow pagination
-        Rule(SgmlLinkExtractor(allow=(r'Recipes/.+/.+/main.aspx\?Page=\d+',)), follow=True),
+        Rule(SgmlLinkExtractor(allow=(r'Recipes/.+/[M|m]ain.aspx\?Page=\d+',)), follow=True),
 
         # Extract recipes
         Rule(SgmlLinkExtractor(allow=(r'Recipe/.+/Detail.aspx',)), callback='parse_recipe')
