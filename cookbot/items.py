@@ -16,7 +16,8 @@ class Recipe(Item):
 
 
 class CookpadRecipe(Recipe):
-    category = Field()
+    category = Field() # Stores only the main category
+    categories = Field() # Stores all of the relevant categories, including parents
     report_count = Field()
     comment_count = Field()
     # memo = Field()

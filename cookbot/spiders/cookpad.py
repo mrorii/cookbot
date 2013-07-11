@@ -51,6 +51,9 @@ class CookpadSpider(CrawlSpider):
         referer = response.request.headers.get('Referer')
         recipe['category'] = int(os.path.basename(urlparse.urlsplit(referer).path))
 
+        categories = hxs.select("//div[@id='category_list']/ul/li/a/@href").re(r'\d+')
+        recipe['categories'] = map(lambda category: int(category), categories)
+
         try:
             recipe['report_count'] = int(
                 hxs.select("//li[@id='tsukurepo_tab']/a/span/text()").re('(\d+)')[0]
