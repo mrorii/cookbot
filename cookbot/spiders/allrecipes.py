@@ -89,9 +89,13 @@ class AllrecipesSpider(CrawlSpider):
                                   .extract()
 
         recipe['nutrients'] = {}
-        recipe['nutrients']['calories'] = int(
-            hxs.select("//span[@id='litCalories']/text()").extract()[0]
-        )
+
+        try:
+            recipe['nutrients']['calories'] = int(
+                hxs.select("//span[@id='litCalories']/text()").extract()[0]
+            )
+        except:
+            pass
 
         def parse_nutrient(name):
             return hxs.select(
