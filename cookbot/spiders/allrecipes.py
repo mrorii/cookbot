@@ -73,8 +73,9 @@ class AllrecipesSpider(CrawlSpider):
         except:
             pass
 
-        recipe['ingredients'] = hxs.select("//span[@class='ingredient-name']/text()") \
-                                   .extract()
+        ingredients = hxs.select("//span[@class='ingredient-name']/text()") \
+                         .extract()
+        recipe['ingredients'] = filter(lambda i: i, map(lambda i: i.strip(), ingredients))
 
         recipe['directions'] = hxs.select("//div[@class='directLeft']/ol/li/span/text()") \
                                   .extract()
@@ -87,12 +88,14 @@ class AllrecipesSpider(CrawlSpider):
         def parse_nutrient(name):
             return hxs.select(
                 "//span[@itemprop='{}Content']/following-sibling::*/text()".format(name)
-            ).extract()[0].replace(' ', '')
+            ).extract()[0].replace(' ', '').strip()
 
         for nutrient_type in ('fat', 'cholesterol', 'fiber', 'sodium',
                               'carbohydrate', 'protein'):
             try:
-                recipe['nutrients'][nutrient_type] = parse_nutrient(nutrient_type)
+                value = parse_nutrient(nutrient_type)
+                if value:
+                    recipe['nutrients'][nutrient_type] = value
             except:
                 pass
         return recipe
