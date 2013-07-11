@@ -5,13 +5,26 @@
 
 from scrapy.item import Item, Field
 
+
 class Recipe(Item):
     id = Field()
     name = Field()
     author = Field()
     description = Field()
     ingredients = Field()
-    # memo = Field()
-    # history = Field()
+    directions = Field()
+
+
+class CookpadRecipe(Recipe):
     report_count = Field()
     comment_count = Field()
+    # memo = Field()
+    # history = Field()
+
+
+class AllrecipesRecipe(Recipe):
+    category = Field()
+    prep_time = Field()
+    cook_time = Field()
+    rating = Field()
+    nutrients = Field()

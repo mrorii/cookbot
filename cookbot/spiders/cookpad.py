@@ -2,14 +2,12 @@
 
 import re
 
-from scrapy import log
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
-from scrapy.http import Request
 from scrapy.selector import HtmlXPathSelector
-from scrapy.spider import BaseSpider
 
-from cookbot.items import Recipe
+from cookbot.items import CookpadRecipe
+
 
 class CookpadSpider(CrawlSpider):
     name = 'cookpad'
@@ -31,7 +29,7 @@ class CookpadSpider(CrawlSpider):
 
     def parse_recipe(self, response):
         hxs = HtmlXPathSelector(response)
-        recipe = Recipe()
+        recipe = CookpadRecipe()
         recipe['id'] = int(re.findall(r'recipe/(\d+)', response.url)[0])
         recipe['name'] = hxs.select("//div[@id='recipe-title']/h1/text()")[0] \
                             .extract().strip()
@@ -42,10 +40,17 @@ class CookpadSpider(CrawlSpider):
                                    .extract().strip()
         recipe['ingredients'] = hxs.select("//div[@class='ingredient_name']/text()") \
                                    .extract()
-        recipe['report_count'] = int(
-            hxs.select("//li[@id='tsukurepo_tab']/a/span/text()").re('(\d+)')[0]
-        )
-        recipe['comment_count'] = int(
-            hxs.select("//li[@id='comment_tab']/a/span/text()").re('(\d+)')[0]
-        )
+        try:
+            recipe['report_count'] = int(
+                hxs.select("//li[@id='tsukurepo_tab']/a/span/text()").re('(\d+)')[0]
+            )
+        except:
+            recipe['report_count'] = 0
+
+        try:
+            recipe['comment_count'] = int(
+                hxs.select("//li[@id='comment_tab']/a/span/text()").re('(\d+)')[0]
+            )
+        except:
+            recipe['comment_count'] = 0
         return recipe

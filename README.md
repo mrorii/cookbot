@@ -1,10 +1,22 @@
 # cookbot
 
-A minimal [cookpad](http://cookpad.com/) crawler.
+Contains crawlers for various recipe websites.
+
+Can be used for:
+
+* [cookpad](http://cookpad.com/)
+* [allrecipes.com](http://allrecipes.com/)
+
+TODO:
+
+* [epicurious](http://www.epicurious.com/)
+* [food network](http://www.foodnetwork.com/)
+
 
 ## Usage
 
-    scrapy crawl cookpad --output=recipes.json
+    scrapy crawl cookpad --output=cookpad.json
+    scrapy crawl allrecipes --output=allrecipes.json
 
 ## License
 
