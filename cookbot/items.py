@@ -16,6 +16,7 @@ class Recipe(Item):
 
 
 class CookpadRecipe(Recipe):
+    category = Field()
     report_count = Field()
     comment_count = Field()
     # memo = Field()

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+import os
 import re
+import urlparse
 
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
@@ -12,11 +14,16 @@ from cookbot.items import CookpadRecipe
 class CookpadSpider(CrawlSpider):
     name = 'cookpad'
     allowed_domains = ['cookpad.com']
-    download_delay = 3
+    download_delay = 1
 
     start_urls = [
         'http://cookpad.com/category/11', # Meat
         'http://cookpad.com/category/10', # Vegetable
+        'http://cookpad.com/category/12', # Fish
+        'http://cookpad.com/category/2',  # Rice
+        'http://cookpad.com/category/6',  # Pasta / Gratin
+        'http://cookpad.com/category/9',  # Noodles
+        'http://cookpad.com/category/15', # Stew, soup
     ]
 
     rules = (
@@ -40,6 +47,10 @@ class CookpadSpider(CrawlSpider):
                                    .extract().strip()
         recipe['ingredients'] = hxs.select("//div[@class='ingredient_name']/text()") \
                                    .extract()
+
+        referer = response.request.headers.get('Referer')
+        recipe['category'] = int(os.path.basename(urlparse.urlsplit(referer).path))
+
         try:
             recipe['report_count'] = int(
                 hxs.select("//li[@id='tsukurepo_tab']/a/span/text()").re('(\d+)')[0]
