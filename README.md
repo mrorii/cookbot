@@ -1,8 +1,6 @@
 # cookbot
 
-Contains crawlers for various recipe websites.
-
-Can be used for:
+Crawlers for various recipe websites. It can be used for crawling:
 
 * [cookpad](http://cookpad.com/)
 * [allrecipes.com](http://allrecipes.com/)
