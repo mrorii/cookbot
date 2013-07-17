@@ -16,6 +16,12 @@ TODO:
     scrapy crawl cookpad --output=cookpad.json
     scrapy crawl allrecipes --output=allrecipes.json
 
+If you want to pause and resume crawls, run it like this:
+
+    scrapy crawl cookpad -s JOBDIR=cpad-crawl --output=cookpad.json
+
+You can stop the spider safely any time (by pressing Ctrl-C), and resume it later by issuing the same command.
+
 ## License
 
 Copyright (c) 2013, [Naoki Orii](http://mrorii.github.io/)
