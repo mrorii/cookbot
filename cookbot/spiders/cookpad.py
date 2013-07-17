@@ -37,6 +37,7 @@ class CookpadSpider(CrawlSpider):
     def parse_recipe(self, response):
         hxs = HtmlXPathSelector(response)
         recipe = CookpadRecipe()
+
         recipe['id'] = int(re.findall(r'recipe/(\d+)', response.url)[0])
         recipe['name'] = hxs.select("//div[@id='recipe-title']/h1/text()")[0] \
                             .extract().strip()
@@ -67,4 +68,20 @@ class CookpadSpider(CrawlSpider):
             )
         except:
             recipe['comment_count'] = 0
+
+
+        for text in ('advice', 'history'):
+                recipe[text] = ''.join(hxs.select("//div[@id='{}']/text()".format(text))
+                                          .extract()).strip()
+
+        recipe['related_keywords'] = hxs.select("//div[@class='related_keywords']/a/text()") \
+                                        .extract()
+
+        image_main = hxs.select("//div[@id='main-photo']/img/@src").extract()
+        if image_main:
+            recipe['image_main'] = image_main[0]
+
+        recipe['images_instruction'] = hxs.select(
+            "//dd[@class='instruction']/div/div[@class='image']/img/@src").extract()
+
         return recipe

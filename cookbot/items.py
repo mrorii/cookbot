@@ -20,8 +20,11 @@ class CookpadRecipe(Recipe):
     categories = Field() # Stores all of the relevant categories, including parents
     report_count = Field()
     comment_count = Field()
-    # memo = Field()
-    # history = Field()
+    advice = Field()
+    history = Field()
+    image_main = Field()
+    images_instruction = Field()
+    related_keywords = Field()
 
 
 class AllrecipesRecipe(Recipe):
