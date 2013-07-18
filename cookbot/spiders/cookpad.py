@@ -44,10 +44,20 @@ class CookpadSpider(CrawlSpider):
         recipe['author'] = int(
             hxs.select("//a[@id='recipe_author_name']/@href").re('(\d+)')[0]
         )
-        recipe['description'] = hxs.select("//div[@id='description']/text()")[0] \
-                                   .extract().strip()
-        recipe['ingredients'] = hxs.select("//div[@class='ingredient_name']/text()") \
-                                   .extract()
+        recipe['description'] = ''.join(hxs.select("//div[@id='description']/text()") \
+                                           .extract()).strip()
+
+        ingredient_path = "//div[@id='ingredients']/div[@id='ingredients_list']/div[@class='ingredient_row']"
+
+        base_ingredients = hxs.select(
+            "{}/div[@class='ingredient_name']/text()".format(ingredient_path)
+        ).extract()
+
+        link_ingredients = hxs.select(
+            "{}/div[@class='ingredient_name']/a/text()".format(ingredient_path)
+        ).extract()
+
+        recipe['ingredients'] = base_ingredients + link_ingredients
 
         referer = response.request.headers.get('Referer')
         recipe['category'] = int(os.path.basename(urlparse.urlsplit(referer).path))
@@ -78,8 +88,7 @@ class CookpadSpider(CrawlSpider):
                                         .extract()
 
         image_main = hxs.select("//div[@id='main-photo']/img/@src").extract()
-        if image_main:
-            recipe['image_main'] = image_main[0]
+        recipe['image_main'] = image_main[0] if image_main else []
 
         recipe['images_instruction'] = hxs.select(
             "//dd[@class='instruction']/div/div[@class='image']/img/@src").extract()
