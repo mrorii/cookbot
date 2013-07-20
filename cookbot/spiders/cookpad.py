@@ -17,13 +17,26 @@ class CookpadSpider(CrawlSpider):
     download_delay = 1
 
     start_urls = [
-        'http://cookpad.com/category/11', # Meat
-        'http://cookpad.com/category/10', # Vegetable
-        'http://cookpad.com/category/12', # Fish
-        'http://cookpad.com/category/2',  # Rice
-        'http://cookpad.com/category/6',  # Pasta / Gratin
-        'http://cookpad.com/category/9',  # Noodles
-        'http://cookpad.com/category/15', # Stew, soup
+        'http://cookpad.com/category/11',   # Meat
+        'http://cookpad.com/category/10',   # Vegetable
+        'http://cookpad.com/category/12',   # Fish
+        'http://cookpad.com/category/2',    # Rice
+        'http://cookpad.com/category/6',    # Pasta / Gratin
+        'http://cookpad.com/category/9',    # Noodles
+        'http://cookpad.com/category/15',   # Stew, soup
+        'http://cookpad.com/category/14',   # Salad
+        'http://cookpad.com/category/1607', # "Nabemono"
+        'http://cookpad.com/category/1641', # "Konamono"
+        'http://cookpad.com/category/13',   # Egg / Soy
+        'http://cookpad.com/category/1436', # Seaweed, konjac
+        'http://cookpad.com/category/1371', # Sauce, dressing
+        'http://cookpad.com/category/221',  # Cookie
+        'http://cookpad.com/category/79',   # Cheese cake
+        'http://cookpad.com/category/78',   # Pie
+        'http://cookpad.com/category/431',  # Chocolate
+        'http://cookpad.com/category/721',  # Cold sweets
+        'http://cookpad.com/category/731',  # Japanese sweets
+        'http://cookpad.com/category/741',  # Other sweets
     ]
 
     rules = (
