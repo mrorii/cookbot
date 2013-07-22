@@ -119,4 +119,9 @@ class CookpadSpider(CrawlSpider):
         recipe['images_instruction'] = hxs.select(
             "//dd[@class='instruction']/div/div[@class='image']/img/@src").extract()
 
+        recipe['published_date'] = hxs.select(
+            "//div[@id='recipe_id_and_published_date']/span[2]/text()").re('\d{2}/\d{2}/\d{2}')[0]
+        recipe['updated_date'] = hxs.select(
+            "//div[@id='recipe_id_and_published_date']/span[3]/text()").re('\d{2}/\d{2}/\d{2}')[0]
+
         return recipe

@@ -13,6 +13,8 @@ class Recipe(Item):
     description = Field()
     ingredients = Field()
     directions = Field()
+    published_date = Field()
+    updated_date = Field()
 
 
 class CookpadRecipe(Recipe):
