@@ -25,18 +25,31 @@ class CookpadSpider(CrawlSpider):
         'http://cookpad.com/category/9',    # Noodles
         'http://cookpad.com/category/15',   # Stew, soup
         'http://cookpad.com/category/14',   # Salad
+        'http://cookpad.com/category/1627', # Croquette
         'http://cookpad.com/category/1607', # "Nabemono"
         'http://cookpad.com/category/1641', # "Konamono"
         'http://cookpad.com/category/13',   # Egg / Soy
         'http://cookpad.com/category/1436', # Seaweed, konjac
         'http://cookpad.com/category/1371', # Sauce, dressing
+        'http://cookpad.com/category/1643', # Healthy
         'http://cookpad.com/category/221',  # Cookie
         'http://cookpad.com/category/79',   # Cheese cake
+        'http://cookpad.com/category/407',  # Pound cake
+        'http://cookpad.com/category/336',  # Sponge cake
+        'http://cookpad.com/category/76',   # Roll cake
+        'http://cookpad.com/category/399',  # Chiffon cake
+        'http://cookpad.com/category/339',  # Tarte
         'http://cookpad.com/category/78',   # Pie
         'http://cookpad.com/category/431',  # Chocolate
+        'http://cookpad.com/category/59',   # Muffin
+        'http://cookpad.com/category/772',  # Scone
+        'http://cookpad.com/category/727',  # Madeleine
+        'http://cookpad.com/category/402',  # Pudding
+        'http://cookpad.com/category/427',  # Choux a la creme
         'http://cookpad.com/category/721',  # Cold sweets
         'http://cookpad.com/category/731',  # Japanese sweets
         'http://cookpad.com/category/741',  # Other sweets
+        'http://cookpad.com/category/1565', # Cream / Sauce / Jam
     ]
 
     rules = (
