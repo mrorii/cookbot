@@ -93,14 +93,14 @@ class CookpadSpider(CrawlSpider):
 
         try:
             recipe['report_count'] = int(
-                hxs.select("//li[@id='tsukurepo_tab']/a/span/text()").re('(\d+)')[0]
+                ''.join(hxs.select("//li[@id='tsukurepo_tab']/a/span/text()").re('(\d+)'))
             )
         except:
             recipe['report_count'] = 0
 
         try:
             recipe['comment_count'] = int(
-                hxs.select("//li[@id='comment_tab']/a/span/text()").re('(\d+)')[0]
+                ''.join(hxs.select("//li[@id='comment_tab']/a/span/text()").re('(\d+)'))
             )
         except:
             recipe['comment_count'] = 0
