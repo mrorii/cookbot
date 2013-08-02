@@ -10,6 +10,10 @@ TODO:
 * [epicurious](http://www.epicurious.com/)
 * [food network](http://www.foodnetwork.com/)
 
+## Requirements
+
+    pip install scrapy
+
 ## Usage
 
     scrapy crawl cookpad --output=cookpad.json
