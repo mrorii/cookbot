@@ -5,6 +5,10 @@
 
 from scrapy.item import Item, Field
 
+class Ingredient(Item):
+    name = Field()
+    quantity = Field()
+
 
 class Recipe(Item):
     id = Field()
@@ -12,7 +16,7 @@ class Recipe(Item):
     author = Field()
     description = Field()
     ingredients = Field()
-    directions = Field()
+    instructions = Field()
     published_date = Field()
     updated_date = Field()
 
