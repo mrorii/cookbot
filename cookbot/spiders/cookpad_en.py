@@ -73,9 +73,9 @@ class CookpadEnSpider(CrawlSpider):
         ingredients = []
         ingredient_basepath = ("//table[@class='ingredients_list']/"  # no tbody required
                                "tr[@class='ingredient_row']")
-        ingredient_names = hxs.select("{}/td[@class='ingredient_name']/text()" \
+        ingredient_names = hxs.select("{0}/td[@class='ingredient_name']/text()" \
                                       .format(ingredient_basepath)).extract()
-        ingredient_quantities = hxs.select("{}/td[@class='ingredient_quantity']/text()" \
+        ingredient_quantities = hxs.select("{0}/td[@class='ingredient_quantity']/text()" \
                                            .format(ingredient_basepath)).extract()
         ingredients = []
         for name, quantity in zip(ingredient_names, ingredient_quantities):
