@@ -8,7 +8,7 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 
-from cookbot.items import AllrecipesRecipe
+from cookbot.items import AllrecipesRecipe, Ingredient
 
 
 class AllrecipesSpider(CrawlSpider):
@@ -40,6 +40,17 @@ class AllrecipesSpider(CrawlSpider):
         'http://allrecipes.com/Recipes/Fruits-and-Vegetables/Main.aspx',
         'http://allrecipes.com/Recipes/Seafood/Main.aspx',
         'http://allrecipes.com/Recipes/Pasta/Main.aspx',
+
+        # By Meal Part
+        'http://allrecipes.com/Recipes/appetizers-and-snacks/main.aspx',
+        'http://allrecipes.com/Recipes/drinks/main.aspx',
+        'http://allrecipes.com/Recipes/breakfast-and-brunch/main.aspx',
+        'http://allrecipes.com/Recipes/main-dish/salads/main.aspx',
+        'http://allrecipes.com/Recipes/soups-stews-and-chili/main.aspx',
+        'http://allrecipes.com/Recipes/main-dish/main.aspx',
+        'http://allrecipes.com/Recipes/side-dish/main.aspx',
+        'http://allrecipes.com/Recipes/bread/main.aspx',
+        'http://allrecipes.com/Recipes/desserts/main.aspx',
     ]
 
     rules = (
@@ -54,13 +65,16 @@ class AllrecipesSpider(CrawlSpider):
         hxs = HtmlXPathSelector(response)
         recipe = AllrecipesRecipe()
 
+        # name
         recipe['name'] = hxs.select("//h1[@id='itemTitle']/text()")[0].extract().strip()
 
+        # category
         referer = response.request.headers.get('Referer')
         category = os.path.dirname(urlparse.urlsplit(referer).path)
         recipe['category'] = category if not category.startswith('/Recipes/') \
                                       else category[len('/Recipes/'):]
 
+        # author
         try:
             recipe['author'] = int(
                 hxs.select("//span[@id='lblSubmitter']/a/@href").re('(\d+)')[0]
@@ -68,12 +82,11 @@ class AllrecipesSpider(CrawlSpider):
         except:
             pass
 
-        try:
-            recipe['description'] = hxs.select("//span[@id='lblDescription']/text()")[0] \
-                                       .extract().strip()
-        except:
-            pass
+        # description
+        recipe['description'] = '\n'.join(hxs.select("//span[@id='lblDescription']/text()")
+                                             .extract())
 
+        # rating
         try:
             recipe['rating'] = float(
                 hxs.select("//meta[@itemprop='ratingValue']/@content").extract()[0]
@@ -81,15 +94,31 @@ class AllrecipesSpider(CrawlSpider):
         except:
             pass
 
-        ingredients = hxs.select("//span[@class='ingredient-name']/text()") \
-                         .extract()
-        recipe['ingredients'] = filter(lambda i: i, map(lambda i: i.strip(), ingredients))
+        # ingredients
+        ingredients = []
+        ingredient_nodes = hxs.select("//li[@id='liIngredient']")
+        for ingredient_node in ingredient_nodes:
+            try:
+                name = ingredient_node.select("label/p/span[@id='lblIngName']/text()") \
+                                      .extract()[0]
+                quantity = ingredient_node.select("label/p/span[@id='lblIngAmount']/text()") \
+                                      .extract()[0]
+            except:
+                continue
 
-        recipe['directions'] = hxs.select("//div[@class='directLeft']/ol/li/span/text()") \
-                                  .extract()
+            ingredient = Ingredient()
+            ingredient['name'] = name
+            ingredient['quantity'] = quantity
+            ingredients.append(ingredient)
+        recipe['ingredients'] = ingredients
 
+        # instructions
+        recipe['instructions'] = hxs.select(
+            "//div[@class='directions']/div/ol/li/span/text()"
+        ).extract()
+
+        # nutrients
         recipe['nutrients'] = {}
-
         try:
             recipe['nutrients']['calories'] = int(
                 hxs.select("//span[@id='litCalories']/text()").extract()[0]
@@ -110,4 +139,5 @@ class AllrecipesSpider(CrawlSpider):
                     recipe['nutrients'][nutrient_type] = value
             except:
                 pass
+
         return recipe
