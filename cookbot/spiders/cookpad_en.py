@@ -32,6 +32,7 @@ class CookpadEnSpider(CrawlSpider):
         'https://en.cookpad.com/categories/sauce-dressing',
         'https://en.cookpad.com/categories/healthy-meal',
         'https://en.cookpad.com/categories/party',
+        'https://en.cookpad.com/categories/konjac-shirataki',
         'https://en.cookpad.com/categories/spice-herb',
         'https://en.cookpad.com/categories/yogurt',
         'https://en.cookpad.com/categories/miso-vinegar-fermentation',
