@@ -182,7 +182,7 @@ class CookpadSpider(CrawlSpider):
 
         # advice and history
         for text in ('advice', 'history'):
-                recipe[text] = ''.join(hxs.select("//div[@id='{}']/text()".format(text))
+                recipe[text] = ''.join(hxs.select("//div[@id='{0}']/text()".format(text))
                                           .extract()).strip()
 
         # related keywords
