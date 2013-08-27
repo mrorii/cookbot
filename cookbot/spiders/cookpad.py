@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import os
 import re
@@ -17,51 +18,86 @@ class CookpadSpider(CrawlSpider):
     download_delay = 1
 
     start_urls = [
-        'http://cookpad.com/category/10',   # Vegetable
-        'http://cookpad.com/category/11',   # Meat
-        'http://cookpad.com/category/12',   # Fish
-        'http://cookpad.com/category/2',    # Rice
-        'http://cookpad.com/category/6',    # Pasta/ Gratin
-        'http://cookpad.com/category/9',    # Noodles
-        'http://cookpad.com/category/15',   # Stew, soup
-        'http://cookpad.com/category/14',   # Salad
-        'http://cookpad.com/category/1627', # Croquette
-        'http://cookpad.com/category/1607', # "Nabemono"
-        'http://cookpad.com/category/1641', # "Konamono"
-        'http://cookpad.com/category/13',   # Egg / Soy
-        'http://cookpad.com/category/1436', # Seaweed, konjac
-        'http://cookpad.com/category/1371', # Sauce, dressing
-        'http://cookpad.com/category/1643', # Healthy
-        # 'http://cookpad.com/category/221',  # Cookie
-        # 'http://cookpad.com/category/79',   # Cheese cake
-        # 'http://cookpad.com/category/407',  # Pound cake
-        # 'http://cookpad.com/category/336',  # Sponge cake
-        # 'http://cookpad.com/category/76',   # Roll cake
-        # 'http://cookpad.com/category/399',  # Chiffon cake
-        # 'http://cookpad.com/category/339',  # Tarte
-        # 'http://cookpad.com/category/78',   # Pie
-        # 'http://cookpad.com/category/431',  # Chocolate
-        # 'http://cookpad.com/category/59',   # Muffin
-        # 'http://cookpad.com/category/772',  # Scone
-        # 'http://cookpad.com/category/727',  # Madeleine
-        # 'http://cookpad.com/category/402',  # Pudding
-        # 'http://cookpad.com/category/427',  # Choux a la creme
-        # 'http://cookpad.com/category/721',  # Cold sweets
-        # 'http://cookpad.com/category/731',  # Japanese sweets
-        # 'http://cookpad.com/category/741',  # Other sweets
-        # 'http://cookpad.com/category/1565', # Cream / Sauce / Jam
-        'http://cookpad.com/category/502', # recipes using bread
-        'http://cookpad.com/category/849', # Sandwich / Hamburger
-        'http://cookpad.com/category/1651', # Bento
-        'http://cookpad.com/category/1600', # Spice & Herb
-        'http://cookpad.com/category/1444', # Party
-        'http://cookpad.com/category/1529', # Japanese New Year
-        'http://cookpad.com/category/1510', # Christmas
-        'http://cookpad.com/category/1780', # Regional
-        'http://cookpad.com/category/1733', # Fermented items
-        'http://cookpad.com/category/1756', # Appetizer (finger food)
-        'http://cookpad.com/category/1680', # Yogurt
-        'http://cookpad.com/category/1766', # Chinese
+        # きょうの料理
+        'http://cookpad.com/category/10',   # 野菜のおかず
+        'http://cookpad.com/category/11',   # お肉のおかず
+        'http://cookpad.com/category/12',   # 魚介のおかず
+        'http://cookpad.com/category/2',    # ごはんもの
+        'http://cookpad.com/category/6',    # パスタ・グラタン
+        'http://cookpad.com/category/9',    # 麺
+        'http://cookpad.com/category/15',   # シチュー・スープ・汁物
+        'http://cookpad.com/category/14',   # サラダ
+        'http://cookpad.com/category/1627', # コロッケ・メンチカツ
+        'http://cookpad.com/category/1607', # 鍋もの
+        'http://cookpad.com/category/1641', # 粉もの
+        'http://cookpad.com/category/13',   # たまご・大豆加工品
+        'http://cookpad.com/category/1436', # 海藻・乾物・こんにゃく
+        'http://cookpad.com/category/1371', # ソース・ドレッシング
+        'http://cookpad.com/category/1643', # ヘルシーおかず
+
+        # お菓子
+        'http://cookpad.com/category/221',  # クッキー
+        'http://cookpad.com/category/79',   # チーズケーキ
+        'http://cookpad.com/category/407',  # パウンドケーキ
+        'http://cookpad.com/category/336',  # スポンジケーキ
+        'http://cookpad.com/category/76',   # ロールケーキ
+        'http://cookpad.com/category/399',  # シフォンケーキ
+        'http://cookpad.com/category/339',  # タルト
+        'http://cookpad.com/category/78',   # パイ
+        'http://cookpad.com/category/431',  # チョコレートのお菓子
+        'http://cookpad.com/category/59',   # マフィン
+        'http://cookpad.com/category/772',  # スコーン
+        'http://cookpad.com/category/727',  # マドレーヌ・フィナンシェ
+        'http://cookpad.com/category/402',  # プリン
+        'http://cookpad.com/category/427',  # シュークリーム
+        'http://cookpad.com/category/721',  # 冷たいお菓子
+        'http://cookpad.com/category/1291', # ホットケーキミックスを使ったお菓子
+        'http://cookpad.com/category/726',  # 電子レンジで作れるお菓子
+        'http://cookpad.com/category/731',  # 和菓子
+        'http://cookpad.com/category/1452', # 野菜を使ったお菓子
+        'http://cookpad.com/category/1416', # おから・豆腐・豆乳を使ったお菓子
+        'http://cookpad.com/category/741',  # その他のお菓子
+        'http://cookpad.com/category/1453', # アレルギー対策のお菓子
+        'http://cookpad.com/category/1565', # クリーム・ソース・ジャム
+
+        # パン
+        'http://cookpad.com/category/74',   # ハードブレッド
+        'http://cookpad.com/category/445',  # テーブルブレッド
+        'http://cookpad.com/category/446,'  # 食パン
+        'http://cookpad.com/category/447',  # 菓子パン
+        'http://cookpad.com/category/448',  # デニッシュ・クロワッサン
+        'http://cookpad.com/category/470',  # 天然酵母
+        'http://cookpad.com/category/477',  # ピザ・野菜・おかず系パン
+        'http://cookpad.com/category/478',  # アウトドア
+        'http://cookpad.com/category/479',  # いろんなものでパン作り
+        'http://cookpad.com/category/480',  # 揚げパン・ドーナツ
+        'http://cookpad.com/category/481',  # 蒸しパン
+        'http://cookpad.com/category/500',  # ホームベーカリーを使ったパン
+        'http://cookpad.com/category/501',  # 世界各国のパン
+        'http://cookpad.com/category/502',  # パンを使って
+        'http://cookpad.com/category/781',  # ベーグル作り
+        'http://cookpad.com/category/849',  # サンドイッチ・ハンバーガー
+        'http://cookpad.com/category/1264', # デコレーションパン
+
+        # その他
+        'http://cookpad.com/category/1865', # 再現レシピ
+        'http://cookpad.com/category/1843', # 夏に食べたい料理
+        'http://cookpad.com/category/1651', # お弁当
+        'http://cookpad.com/category/1600', # スパイス＆ハーブ
+        'http://cookpad.com/category/1444', # おもてなし料理
+        'http://cookpad.com/category/1664', # ドリンク
+        'http://cookpad.com/category/1715', # 調理器具
+        'http://cookpad.com/category/1529', # お正月の料理
+        'http://cookpad.com/category/1510', # クリスマス
+        'http://cookpad.com/category/1693', # 限られた食材で工夫
+        'http://cookpad.com/category/1780', # ご当地料理
+        'http://cookpad.com/category/1945', # 秋におすすめ料理
+        'http://cookpad.com/category/1760', # バーベキュー・キャンプ料理
+        'http://cookpad.com/category/1733', # 発酵食品・発酵調味料
+        'http://cookpad.com/category/1756', # おつまみ
+        'http://cookpad.com/category/1766', # 中華料理
+        'http://cookpad.com/category/1909', # ハワイ料理
+        'http://cookpad.com/category/1775', # Multilingual Recipes
     ]
 
     rules = (
